@@ -27,7 +27,9 @@ class AssignPermissionToRoleSeeder extends Seeder
             ->pluck([
                 'user-view',
                 'user-create',
-                'user-edit'
+                'user-update',
+                'user-delete',
+                'user-restore',
             ]);
 
         $role = Role::query()

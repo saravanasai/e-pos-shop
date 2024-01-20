@@ -3,9 +3,8 @@
 namespace App\Policies;
 
 use App\Models\User;
-use Illuminate\Auth\Access\Response;
 
-class UserPolicy
+class RolePolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -14,6 +13,13 @@ class UserPolicy
     {
         return true;
     }
+    /**
+     * Create a new policy instance.
+     */
+    public function __construct()
+    {
+        //
+    }
 
     /**
      * Determine whether the user can view the model.
@@ -21,7 +27,7 @@ class UserPolicy
     public function view(User $user,User $authUser): bool
     {
 
-        return $authUser->hasRole(['admin', 'manager']);
+        return $authUser->hasRole(['admin']);
     }
 
     /**
@@ -29,38 +35,38 @@ class UserPolicy
      */
     public function create(User $user,User $authUser): bool
     {
-        return $authUser->hasRole(['admin', 'manager']);
+        return $authUser->hasRole(['admin']);
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user): bool
+    public function update(User $user,User $authUser): bool
     {
-        return $user->hasRole(['admin']);
+        return $authUser->hasRole(['admin']);
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user): bool
+    public function delete(User $user,User $authUser): bool
     {
-        return $user->hasRole(['admin']);
+        return $authUser->hasRole(['admin']);
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user): bool
+    public function restore(User $user,User $authUser): bool
     {
-        return $user->hasRole(['admin']);
+        return $authUser->hasRole(['admin']);
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user): bool
+    public function forceDelete(User $user,User $authUser): bool
     {
-        return $user->hasRole(['admin']);
+        return $authUser->hasRole(['admin']);
     }
 }

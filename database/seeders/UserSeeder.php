@@ -20,10 +20,14 @@ class UserSeeder extends Seeder
             'password' => Hash::make('1412')
         ]);
 
+        User::find(1)->assignRole('admin');
+
         User::create([
             'username' => 'saravana',
             'email' => 'manager@zerocode.com',
             'password' => Hash::make('1412')
         ]);
+
+        User::find(2)->assignRole('manager');
     }
 }

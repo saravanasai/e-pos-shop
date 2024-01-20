@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Authentication;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\v1\UserResource;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -10,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function login(Request $request): JsonResponse
+    public function login(Request $request)
     {
         $request->validate([
             'email' => ['required', 'email'],
@@ -32,15 +33,10 @@ class AuthController extends Controller
 
         $token = $user->createToken($request->get('device_name') . "-" . (count($user->tokens) + 1))->plainTextToken;
 
-        $response = [
-            'token' => $token,
-            'user' => $user
-        ];
-
-        return response()->json($response, 200);
+        return UserResource::make($user)->additional(['token' => $token]);
     }
 
-    public function user(): JsonResponse
+    public function user(): User
     {
         return request()->user();
     }
